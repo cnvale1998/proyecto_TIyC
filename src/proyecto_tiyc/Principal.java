@@ -63,7 +63,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(240, 240, 240));
         jLabel3.setText("Archivo seleccionado:");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(380, 160, 190, 20);
+        jLabel3.setBounds(380, 160, 190, 19);
 
         seleccionar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         seleccionar.setText("Seleccionar");
@@ -214,7 +214,16 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void ejecutar(int opcion, String tipo){ ///Dom(tipo)={huffman, hamming} ///LINUX
+                                                   ///Dom(tipo)={huffman.exe, hamming.exe} ///WINDOWS
+        Runtime app= Runtime.getRuntime();
+        try{
+            //app.exec("./"+tipo+" "+this.rutaArchivo+" "+opcion); ///LINUX
+            app.exec(tipo+" "+this.rutaArchivo+" "+opcion); ///WINDOWS
+        }catch(Exception e){
+            System.out.println("Error " + e);
+        }
+    }
     private void compactarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compactarActionPerformed
         // TODO add your handling code here:
         if (nombreArchivo.getText().length()==0){
@@ -232,6 +241,8 @@ public class Principal extends javax.swing.JFrame {
         }
         else {
             //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
+            ///this.ejecutar(2, "huffman"); ///LINUX
+            this.ejecutar(2, "huffman.exe"); ///WINDOWS
         }
     }//GEN-LAST:event_descompactarActionPerformed
 
@@ -272,6 +283,8 @@ public class Principal extends javax.swing.JFrame {
         }
         else {
             //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
+            ///this.ejecutar(1, "huffman");///LINUX
+            this.ejecutar(1, "huffman.exe");///WINDOWS
         }
         
     }//GEN-LAST:event_compactarMouseClicked
