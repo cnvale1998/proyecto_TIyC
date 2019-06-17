@@ -70,7 +70,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(240, 240, 240));
         jLabel3.setText("Archivo seleccionado:");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(380, 160, 190, 20);
+        jLabel3.setBounds(380, 160, 190, 19);
 
         seleccionar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         seleccionar.setText("Seleccionar");
@@ -237,13 +237,34 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void ejecutar(int opcion, String tipo){ ///Dom(tipo)={huffman, hamming} ///LINUX
+                                                   ///Dom(tipo)={huffman.exe, hamming.exe} ///WINDOWS
+        Runtime app= Runtime.getRuntime();
+        try{
+            //app.exec("./"+tipo+" "+this.rutaArchivo+" "+opcion); ///LINUX
+            app.exec(tipo+" "+this.rutaArchivo+" "+opcion); ///WINDOWS
+        }catch(Exception e){
+            System.out.println("Error " + e);
+        }
+    }
     private void compactarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compactarActionPerformed
 
     }//GEN-LAST:event_compactarActionPerformed
 
     private void descompactarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descompactarActionPerformed
+<<<<<<< HEAD
 
+=======
+        // TODO add your handling code here:
+        if (nombreArchivo.getText().length()==0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
+            ///this.ejecutar(2, "huffman"); ///LINUX
+            this.ejecutar(2, "huffman.exe"); ///WINDOWS
+        }
+>>>>>>> origin/manu
     }//GEN-LAST:event_descompactarActionPerformed
 
     private void hamming1024ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hamming1024ActionPerformed
@@ -286,7 +307,12 @@ public class Principal extends javax.swing.JFrame {
         }
         else {
             //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
+<<<<<<< HEAD
             JOptionPane.showMessageDialog(null, "El archivo fue compactado con éxito.\n Puedes visualizarlo con el nombre '"+nombreArchivo.getText()+"_comprimido.txt' en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+=======
+            ///this.ejecutar(1, "huffman");///LINUX
+            this.ejecutar(1, "huffman.exe");///WINDOWS
+>>>>>>> origin/manu
         }
         
     }//GEN-LAST:event_compactarMouseClicked
