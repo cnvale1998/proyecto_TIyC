@@ -15,7 +15,7 @@ public class Proyecto_TIyC {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new Principal().setVisible(true);
+        new Principal("","").setVisible(true);
     }
     
 }

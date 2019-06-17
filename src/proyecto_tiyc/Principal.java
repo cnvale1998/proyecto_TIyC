@@ -14,12 +14,18 @@ import javax.swing.JOptionPane;
  * @author pc
  */
 public class Principal extends javax.swing.JFrame {
-    String rutaArchivo;
+    private static String rutaArchivo;
+    private static String nombre;
     /**
      * Creates new form Principal
+     * @param ruta path del archivo
+     * @param nombre nombre del archivo
      */
-    public Principal() {
+    public Principal(String ruta,String nombre) {
         initComponents();
+        rutaArchivo=ruta;
+        this.nombre=nombre;
+        this.nombreArchivo.setText(nombre);
     }
 
     /**
@@ -36,10 +42,11 @@ public class Principal extends javax.swing.JFrame {
         seleccionar = new javax.swing.JButton();
         nombreArchivo = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        proteger = new javax.swing.JButton();
-        insertar_errores = new javax.swing.JButton();
-        desproteger = new javax.swing.JButton();
+        hamming8 = new javax.swing.JButton();
+        hamming32 = new javax.swing.JButton();
+        hamming1024 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        hamming32768 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         compactar = new javax.swing.JButton();
         descompactar = new javax.swing.JButton();
@@ -87,33 +94,41 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(27, 104, 134));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 240), 3));
 
-        proteger.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        proteger.setText("Proteger archivo");
-        proteger.addActionListener(new java.awt.event.ActionListener() {
+        hamming8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        hamming8.setText("Hamming 8");
+        hamming8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                protegerActionPerformed(evt);
+                hamming8ActionPerformed(evt);
             }
         });
 
-        insertar_errores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        insertar_errores.setText("Introducir errores");
-        insertar_errores.addActionListener(new java.awt.event.ActionListener() {
+        hamming32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        hamming32.setText("Hamming 32");
+        hamming32.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insertar_erroresActionPerformed(evt);
+                hamming32ActionPerformed(evt);
             }
         });
 
-        desproteger.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        desproteger.setText("Desproteger archivo");
-        desproteger.addActionListener(new java.awt.event.ActionListener() {
+        hamming1024.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        hamming1024.setText("Hamming 1024");
+        hamming1024.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                desprotegerActionPerformed(evt);
+                hamming1024ActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(240, 240, 240));
         jLabel4.setText("Hamming");
+
+        hamming32768.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        hamming32768.setText("Hamming 32768");
+        hamming32768.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hamming32768ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -127,9 +142,10 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(insertar_errores, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(desproteger, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(proteger, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(hamming32, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hamming1024, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hamming8, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hamming32768, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -137,13 +153,15 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel4)
-                .addGap(39, 39, 39)
-                .addComponent(proteger, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(insertar_errores, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(desproteger, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(hamming8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(hamming32, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(hamming1024, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(hamming32768, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2);
@@ -167,6 +185,11 @@ public class Principal extends javax.swing.JFrame {
 
         descompactar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         descompactar.setText("Descompactar archivo");
+        descompactar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                descompactarMouseClicked(evt);
+            }
+        });
         descompactar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 descompactarActionPerformed(evt);
@@ -216,54 +239,45 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void compactarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compactarActionPerformed
-        // TODO add your handling code here:
-        if (nombreArchivo.getText().length()==0){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-        else {
-            //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
-        }
+
     }//GEN-LAST:event_compactarActionPerformed
 
     private void descompactarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descompactarActionPerformed
-        // TODO add your handling code here:
-        if (nombreArchivo.getText().length()==0){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-        else {
-            //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
-        }
+
     }//GEN-LAST:event_descompactarActionPerformed
 
-    private void desprotegerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desprotegerActionPerformed
+    private void hamming1024ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hamming1024ActionPerformed
         // TODO add your handling code here:
         if (nombreArchivo.getText().length()==0){
             JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
         else {
-            //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
+            this.setVisible(false);
+            new MenuHamming(rutaArchivo,nombreArchivo.getText(),1024).setVisible(true);
         }
-    }//GEN-LAST:event_desprotegerActionPerformed
+    }//GEN-LAST:event_hamming1024ActionPerformed
 
-    private void protegerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_protegerActionPerformed
+    private void hamming8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hamming8ActionPerformed
         // TODO add your handling code here:
         if (nombreArchivo.getText().length()==0){
             JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
         else {
-            //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
+            this.setVisible(false);
+            new MenuHamming(rutaArchivo,nombreArchivo.getText(),8).setVisible(true);
         }
-    }//GEN-LAST:event_protegerActionPerformed
+    }//GEN-LAST:event_hamming8ActionPerformed
 
-    private void insertar_erroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertar_erroresActionPerformed
+    private void hamming32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hamming32ActionPerformed
         // TODO add your handling code here:
         if (nombreArchivo.getText().length()==0){
             JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
         else {
-            //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
+            this.setVisible(false);
+            new MenuHamming(rutaArchivo,nombreArchivo.getText(),32).setVisible(true);
         }
-    }//GEN-LAST:event_insertar_erroresActionPerformed
+    }//GEN-LAST:event_hamming32ActionPerformed
 
     private void compactarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compactarMouseClicked
         // TODO add your handling code here:
@@ -272,6 +286,7 @@ public class Principal extends javax.swing.JFrame {
         }
         else {
             //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
+            JOptionPane.showMessageDialog(null, "El archivo fue compactado con éxito.\n Puedes visualizarlo con el nombre '"+nombreArchivo.getText()+"_comprimido.txt' en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         }
         
     }//GEN-LAST:event_compactarMouseClicked
@@ -293,6 +308,26 @@ public class Principal extends javax.swing.JFrame {
     private void nombreArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreArchivoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreArchivoActionPerformed
+
+    private void hamming32768ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hamming32768ActionPerformed
+        if (nombreArchivo.getText().length()==0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            this.setVisible(false);
+            new MenuHamming(rutaArchivo,nombreArchivo.getText(),32768).setVisible(true);
+        }
+    }//GEN-LAST:event_hamming32768ActionPerformed
+
+    private void descompactarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_descompactarMouseClicked
+        if (nombreArchivo.getText().length()==0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
+            JOptionPane.showMessageDialog(null, "El archivo fue descompactado con éxito.\n Puedes visualizarlo con el nombre '"+nombreArchivo.getText()+"_descomprimido.txt' en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_descompactarMouseClicked
 
     
     
@@ -326,7 +361,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new Principal(rutaArchivo,nombre).setVisible(true);
             }
         });
     }
@@ -334,8 +369,10 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton compactar;
     private javax.swing.JButton descompactar;
-    private javax.swing.JButton desproteger;
-    private javax.swing.JButton insertar_errores;
+    private javax.swing.JButton hamming1024;
+    private javax.swing.JButton hamming32;
+    private javax.swing.JButton hamming32768;
+    private javax.swing.JButton hamming8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -344,7 +381,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField nombreArchivo;
-    private javax.swing.JButton proteger;
     private javax.swing.JButton seleccionar;
     // End of variables declaration//GEN-END:variables
 }
