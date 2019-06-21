@@ -6,6 +6,7 @@
 package proyecto_tiyc;
 
 import java.io.File;
+import java.util.Date;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -16,16 +17,26 @@ import javax.swing.JOptionPane;
 public class Principal extends javax.swing.JFrame {
     private static String rutaArchivo;
     private static String nombre;
+    private static Date fecha;
     /**
      * Creates new form Principal
      * @param ruta path del archivo
      * @param nombre nombre del archivo
      */
-    public Principal(String ruta,String nombre) {
+    public Principal(String ruta,String nombre, Date fechaElegida) {
         initComponents();
         rutaArchivo=ruta;
         this.nombre=nombre;
         this.nombreArchivo.setText(nombre);
+        
+       if (fechaElegida==null){
+       this.fechaCajita.setText("Fecha aún no elegida");
+       }
+       else{
+          this.fecha=fechaElegida;
+          this.fechaCajita.setText(this.fecha.toString());
+       }
+        
     }
 
     /**
@@ -38,6 +49,9 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        fechaApertura = new javax.swing.JButton();
+        fechaCajita = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         seleccionar = new javax.swing.JButton();
         nombreArchivo = new javax.swing.JTextField();
@@ -54,9 +68,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1350, 768));
         setMinimumSize(new java.awt.Dimension(1350, 768));
-        setPreferredSize(new java.awt.Dimension(1350, 768));
         setSize(new java.awt.Dimension(1350, 768));
         getContentPane().setLayout(null);
 
@@ -66,11 +78,36 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(40, 40, 290, 80);
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel6.setText("Fecha seleccionada:");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(380, 80, 190, 20);
+
+        fechaApertura.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        fechaApertura.setText("Añadir fecha de apertura");
+        fechaApertura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fechaAperturaMouseClicked(evt);
+            }
+        });
+        getContentPane().add(fechaApertura);
+        fechaApertura.setBounds(820, 110, 190, 30);
+
+        fechaCajita.setEditable(false);
+        fechaCajita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaCajitaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(fechaCajita);
+        fechaCajita.setBounds(380, 110, 420, 30);
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(240, 240, 240));
         jLabel3.setText("Archivo seleccionado:");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(380, 160, 190, 19);
+        jLabel3.setBounds(380, 160, 190, 20);
 
         seleccionar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         seleccionar.setText("Seleccionar");
@@ -237,7 +274,8 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void ejecutar(int opcion, String tipo){ ///Dom(tipo)={huffman, hamming} ///LINUX
+    
+    /*private void ejecutar(int opcion, String tipo){ ///Dom(tipo)={huffman, hamming} ///LINUX
                                                    ///Dom(tipo)={huffman.exe, hamming.exe} ///WINDOWS
         Runtime app= Runtime.getRuntime();
         try{
@@ -246,25 +284,45 @@ public class Principal extends javax.swing.JFrame {
         }catch(Exception e){
             System.out.println("Error " + e);
         }
+    }*/
+    
+    
+    private void ejecutar(int opcion, String tipo){ ///Dom(tipo)={huffman.exe, hamming.exe} 
+        Runtime app= Runtime.getRuntime();
+        try{
+            app.exec(tipo+" "+this.rutaArchivo.replace("\\", "\\\\")+" "+opcion);
+            System.out.println(tipo+" "+this.rutaArchivo.replace("\\", "\\\\")+" "+opcion );
+        }catch(Exception e){
+            System.out.println("Error " + e);
+        }
     }
+
+    
+    
     private void compactarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compactarActionPerformed
 
     }//GEN-LAST:event_compactarActionPerformed
 
     private void descompactarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descompactarActionPerformed
-<<<<<<< HEAD
 
-=======
         // TODO add your handling code here:
-        if (nombreArchivo.getText().length()==0){
+        /*if (nombreArchivo.getText().length()==0){
             JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
         else {
             //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
             ///this.ejecutar(2, "huffman"); ///LINUX
             this.ejecutar(2, "huffman.exe"); ///WINDOWS
+            JOptionPane.showMessageDialog(null, "El archivo fue descompactado con éxito.\n Puedes visualizarlo con el nombre '"+nombreArchivo.getText()+"_comprimido.txt' en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }*/
+        
+        if (nombreArchivo.getText().length()==0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
->>>>>>> origin/manu
+        else {
+            this.ejecutar(2, "huffman.exe");//FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
+            JOptionPane.showMessageDialog(null, "El archivo fue descompactado con éxito.\n Puedes visualizarlo en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_descompactarActionPerformed
 
     private void hamming1024ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hamming1024ActionPerformed
@@ -274,7 +332,7 @@ public class Principal extends javax.swing.JFrame {
         }
         else {
             this.setVisible(false);
-            new MenuHamming(rutaArchivo,nombreArchivo.getText(),1024).setVisible(true);
+            new MenuHamming(rutaArchivo,nombreArchivo.getText(),fecha,1024).setVisible(true);
         }
     }//GEN-LAST:event_hamming1024ActionPerformed
 
@@ -285,7 +343,7 @@ public class Principal extends javax.swing.JFrame {
         }
         else {
             this.setVisible(false);
-            new MenuHamming(rutaArchivo,nombreArchivo.getText(),8).setVisible(true);
+            new MenuHamming(rutaArchivo,nombreArchivo.getText(),fecha,8).setVisible(true);
         }
     }//GEN-LAST:event_hamming8ActionPerformed
 
@@ -296,24 +354,32 @@ public class Principal extends javax.swing.JFrame {
         }
         else {
             this.setVisible(false);
-            new MenuHamming(rutaArchivo,nombreArchivo.getText(),32).setVisible(true);
+            new MenuHamming(rutaArchivo,nombreArchivo.getText(),fecha,32).setVisible(true);
         }
     }//GEN-LAST:event_hamming32ActionPerformed
 
     private void compactarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compactarMouseClicked
         // TODO add your handling code here:
-        if (nombreArchivo.getText().length()==0){
+        /*if (nombreArchivo.getText().length()==0){
             JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
         else {
             //FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
-<<<<<<< HEAD
-            JOptionPane.showMessageDialog(null, "El archivo fue compactado con éxito.\n Puedes visualizarlo con el nombre '"+nombreArchivo.getText()+"_comprimido.txt' en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-=======
             ///this.ejecutar(1, "huffman");///LINUX
             this.ejecutar(1, "huffman.exe");///WINDOWS
->>>>>>> origin/manu
+            JOptionPane.showMessageDialog(null, "El archivo fue compactado con éxito.\n Puedes visualizarlo con el nombre '"+nombreArchivo.getText()+"_comprimido.txt' en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }*/
+        if (nombreArchivo.getText().length()==0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
+        else {
+            
+            this.ejecutar(1, "huffman.exe");//FUNCION EN C CON EL PATH ALMACENADO EN rutaArchivo
+            //System.out.println(this.rutaArchivo);
+            JOptionPane.showMessageDialog(null, "El archivo fue compactado con éxito.\n Puedes visualizarlo en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+
         
     }//GEN-LAST:event_compactarMouseClicked
 
@@ -326,6 +392,7 @@ public class Principal extends javax.swing.JFrame {
             rutaArchivo=f.getAbsolutePath();
             String nombreAr=f.getName();
             nombreArchivo.setText(nombreAr);
+            this.nombre=nombreAr;
         }
         
         
@@ -341,7 +408,7 @@ public class Principal extends javax.swing.JFrame {
         }
         else {
             this.setVisible(false);
-            new MenuHamming(rutaArchivo,nombreArchivo.getText(),32768).setVisible(true);
+            new MenuHamming(rutaArchivo,nombreArchivo.getText(),fecha,32768).setVisible(true);
         }
     }//GEN-LAST:event_hamming32768ActionPerformed
 
@@ -354,6 +421,21 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El archivo fue descompactado con éxito.\n Puedes visualizarlo con el nombre '"+nombreArchivo.getText()+"_descomprimido.txt' en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_descompactarMouseClicked
+
+    private void fechaAperturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fechaAperturaMouseClicked
+        // TODO add your handling code here:
+         if (nombreArchivo.getText().length()==0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+        this.setEnabled(false);
+        new Fecha_Selector(this.rutaArchivo.replace("\\", "\\\\"),nombre).setVisible(true);
+         }
+    }//GEN-LAST:event_fechaAperturaMouseClicked
+
+    private void fechaCajitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaCajitaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaCajitaActionPerformed
 
     
     
@@ -387,7 +469,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal(rutaArchivo,nombre).setVisible(true);
+                new Principal(rutaArchivo,nombre,fecha).setVisible(true);
             }
         });
     }
@@ -395,6 +477,8 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton compactar;
     private javax.swing.JButton descompactar;
+    private javax.swing.JButton fechaApertura;
+    private javax.swing.JTextField fechaCajita;
     private javax.swing.JButton hamming1024;
     private javax.swing.JButton hamming32;
     private javax.swing.JButton hamming32768;
@@ -404,9 +488,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField nombreArchivo;
     private javax.swing.JButton seleccionar;
     // End of variables declaration//GEN-END:variables
 }
+

@@ -5,6 +5,8 @@
  */
 package proyecto_tiyc;
 
+import java.io.File;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,6 +16,7 @@ import javax.swing.JOptionPane;
 public class MenuHamming extends javax.swing.JFrame {
     private static String rutaArchivo;
     private static String nombreArchivo;
+    private static Date fecha;
     private static int numeroHamming;
     private boolean protegido=false;
     /**
@@ -24,7 +27,7 @@ public class MenuHamming extends javax.swing.JFrame {
      * se utiliza para mostrarlo por pantalla
      * @param numeroH el número de hamming que determinará cuál Hamming aplicar.
      */
-    public MenuHamming(String ruta, String nombre, int numeroH) {
+    public MenuHamming(String ruta, String nombre,Date fecha, int numeroH) {
         initComponents();
         rutaArchivo=ruta;
         nombreArchivo=nombre;
@@ -32,7 +35,33 @@ public class MenuHamming extends javax.swing.JFrame {
         this.archivoNombre.setText(nombreArchivo);
         this.numHamming.setText("Hamming "+numeroHamming);
     }
-
+    /**
+    @param numeroOperacion es un entero que identifica el número de operación
+    * que se está solicitando: 
+    *   1 significa proteger
+    *   2 significa desproteger original
+    *   3 significa insertar errores
+    *   4 significa corregir errores
+    */
+    private void ejecutar_Hamming(int numeroOperacion){ 
+        Runtime app= Runtime.getRuntime();
+        int num=0;
+        if (numeroHamming==8){num=1;}
+        if (numeroHamming==32){num=2;}
+        if (numeroHamming==1024){num=3;}
+        if (numeroHamming==32768){num=4;}
+        try{
+            //String path = new File(".").getCanonicalPath();
+            //System.out.println(path);
+            //app.exec("./"+tipo+" "+this.rutaArchivo+" "+opcion); ///LINUX
+            rutaArchivo=rutaArchivo.replace("\\", "\\\\");
+            app.exec("programa_hamming.exe"+" "+rutaArchivo+" "+num+" "+numeroOperacion + " "+rutaArchivo.replace(nombreArchivo, "")); ///WINDOWS 10
+            System.out.println("Ejecutado");
+        }catch(Exception e){
+            System.out.println("Error " + e);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -173,29 +202,9 @@ public class MenuHamming extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void protegerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_protegerActionPerformed
-        /*leer_archivo_txt(&texto_original,"original.txt");
-        generar_Hamming_32(&texto_original,&hamming_32);
-        guardar_archivo_txt(&hamming_32,"hamming32.txt");
-        ????
-        guardar_archivo_txt(generar_Hamming_32(leer_archivo_txt("original.txt")),"hamming32.txt");
-        */
-        switch(numeroHamming){
-            case 8:{
-            
-            break;}
-            
-            case 32:{
-            
-            break;}
-            
-            case 1024:{
-            
-            break;}
-            
-            case 32768:{
-            
-            break;}
-        }
+        
+        this.ejecutar_Hamming(1);
+        
         JOptionPane.showMessageDialog(null, "El archivo fue protegido con éxito.\n Puedes visualizarlo con el nombre 'hamming"+numeroHamming+".txt' en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         protegido=true;
         
@@ -209,24 +218,7 @@ public class MenuHamming extends javax.swing.JFrame {
         }
         
         else{
-            
-            switch(numeroHamming){
-                case 8:{
-
-                break;}
-
-                case 32:{
-
-                break;}
-
-                case 1024:{
-
-                break;}
-
-                case 32768:{
-
-                break;}
-            }//cierre switch
+            this.ejecutar_Hamming(3);
         JOptionPane.showMessageDialog(null, "Los errores fueron insertados con éxito.\n Puedes visualizarlo con el nombre 'decodificado_con_errores"+numeroHamming+".txt' en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         }//cierre else
         
@@ -240,7 +232,7 @@ public class MenuHamming extends javax.swing.JFrame {
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         this.setVisible(false);
-        new Principal(rutaArchivo,nombreArchivo).setVisible(true);
+        new Principal(rutaArchivo,nombreArchivo,fecha).setVisible(true);
     }//GEN-LAST:event_volverActionPerformed
 
     private void corregir_erroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_corregir_erroresActionPerformed
@@ -250,23 +242,7 @@ public class MenuHamming extends javax.swing.JFrame {
         }
         else{
 
-            switch(numeroHamming){
-                case 8:{
-
-                    break;}
-
-                case 32:{
-
-                    break;}
-
-                case 1024:{
-
-                    break;}
-
-                case 32768:{
-
-                    break;}
-            }//cierre switch
+            this.ejecutar_Hamming(4);
             JOptionPane.showMessageDialog(null, "El archivo fue desprotegido con éxito.\n Puedes visualizarlo con el nombre 'decodificado_sin_errores"+numeroHamming+".txt' en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         }//cierre else
 
@@ -278,23 +254,7 @@ public class MenuHamming extends javax.swing.JFrame {
         }
         else{
 
-            switch(numeroHamming){
-                case 8:{
-
-                    break;}
-
-                case 32:{
-
-                    break;}
-
-                case 1024:{
-
-                    break;}
-
-                case 32768:{
-
-                    break;}
-            }//cierre switch
+            this.ejecutar_Hamming(2);
             JOptionPane.showMessageDialog(null, "El archivo fue desprotegido con éxito.\n Puedes visualizarlo con el nombre 'decodificado"+numeroHamming+".txt' en el mismo directorio que el archivo original.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         }//cierre else
     }//GEN-LAST:event_desprotegerActionPerformed
@@ -331,7 +291,7 @@ public class MenuHamming extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new MenuHamming(rutaArchivo, nombreArchivo, numeroHamming).setVisible(true);
+            new MenuHamming(rutaArchivo, nombreArchivo,fecha, numeroHamming).setVisible(true);
         });
     }
 

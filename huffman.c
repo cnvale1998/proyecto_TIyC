@@ -127,7 +127,8 @@ void inicializar_alfabeto(Nodo *raiz, int p, Bits acumulador){
 void inicializar_Huffman(LI *lista){
     unsigned char dato_inicial=0x00;
     lista->fin=0;
-    for(int i=0; i<256 ;i++){
+    int i;
+    for(i=0; i<256 ;i++){
         Nodo *nuevo=(Nodo*)malloc(sizeof(Nodo));
         if(nuevo!=NULL){
             nuevo->dato=dato_inicial;
@@ -147,7 +148,8 @@ void calcular_probabilidad(LI *lista,char texto_original[]){
     int cantidad[256];
     long int total=0;
     float probabilidades[256];
-    for(int i=0;i<256;i++){
+    int i;
+    for(i=0;i<256;i++){
     cantidad[i]=0;
     probabilidades[i]=0.0;
     }
@@ -162,12 +164,13 @@ void calcular_probabilidad(LI *lista,char texto_original[]){
 
         }
         fclose(archivo_lectura);
-        for(int i=0; i<256; i++){
+
+        for(i=0; i<256; i++){
             probabilidades[i]=((float)cantidad[i])/total;
            // printf("p: %f ", probabilidades[i]);
             }
         lista->fin=0;
-        for(int i=0; i<256; i++){
+        for( i=0; i<256; i++){
             if(probabilidades[i]!=0.0){
                 Nodo *nuevo=(Nodo*)malloc(sizeof(Nodo));
                 if(nuevo!=NULL){
@@ -397,7 +400,8 @@ comprimir_Huffman("original.txt","comprimido.txt");
 descomprimir_Huffman("comprimido.txt","descomprimido.txt",arbol.dato[0]);
 
 **/
-for(int i=0; i<256; i++){
+int i;
+for( i=0; i<256; i++){
 printf("%c %d ", alfabeto[i].letra, alfabeto[i].cantidad_de_bits);
 print_binary(alfabeto[i].bits.dato[3]);
 print_binary(alfabeto[i].bits.dato[2]);
@@ -410,7 +414,7 @@ printf("\n");
 
 int main(int argc, char *argv[])
 {
-
+printf("%s",argv[1]);
 char menu_de_opciones[4]="";
 strcat(menu_de_opciones,argv[2]);
 LI huffman,arbol;
@@ -455,7 +459,8 @@ switch(menu_de_opciones[0]){
         crear_arbol_Huffman(&arbol);
 
         Bits acumulador;
-        for(int i=0;i<4;i++){
+        int i;
+        for(i=0;i<4;i++){
             acumulador.dato[i]=0x00;
         }
 
@@ -487,7 +492,8 @@ switch(menu_de_opciones[0]){
         crear_arbol_Huffman(&arbol);
 
         Bits acumulador;
-        for(int i=0;i<4;i++){
+        int i;
+        for(i=0;i<4;i++){
             acumulador.dato[i]=0x00;
         }
         inicializar_alfabeto(arbol.dato[0],0,acumulador);
